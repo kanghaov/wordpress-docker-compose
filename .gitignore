@@ -1,1 +1,8 @@
 .env
+
+# WordPress application files (generated during migration)
+wp-app/
+wp-data/*
+
+# But keep example/test files
+!wp-data/test_migration.sql

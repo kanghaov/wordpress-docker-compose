@@ -14,6 +14,7 @@ Contents:
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Migration](#migration)
 
 ## Requirements
 
@@ -38,7 +39,7 @@ Edit the `.env` file to change the default IP address, MySQL root password and W
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
-docker-compose up
+docker compose up
 ```
 
 This creates two new folders next to your `docker-compose.yml` file.
@@ -57,13 +58,13 @@ For convenience you may add a new entry into your hosts file.
 You can start the containers with the `up` command in daemon mode (by adding `-d` as an argument) or by using the `start` command:
 
 ```
-docker-compose start
+docker compose start
 ```
 
 ### Stopping containers
 
 ```
-docker-compose stop
+docker compose stop
 ```
 
 ### Removing containers
@@ -71,16 +72,18 @@ docker-compose stop
 To stop and remove all the containers use the`down` command:
 
 ```
-docker-compose down
+docker compose down
 ```
 
 Use `-v` if you need to remove the database volume which is used to persist the database:
 
 ```
-docker-compose down -v
+docker compose down -v
 ```
 
 ### Project from existing source
+
+**For detailed migration instructions, see [MIGRATION.md](MIGRATION.md)**
 
 Copy the `docker-compose.yml` file into a new directory. In the directory you create two folders:
 
@@ -90,7 +93,7 @@ Copy the `docker-compose.yml` file into a new directory. In the directory you cr
 You can now use the `up` command:
 
 ```
-docker-compose up
+docker compose up
 ```
 
 This will create the containers and populate the database with the given dump. You may set your host entry and change it in the database, or you simply overwrite it in `wp-config.php` by adding:
@@ -99,6 +102,8 @@ This will create the containers and populate the database with the given dump. Y
 define('WP_HOME','http://wp-app.local');
 define('WP_SITEURL','http://wp-app.local');
 ```
+
+For a comprehensive migration guide including database export/import, URL changes, and troubleshooting, see [MIGRATION.md](MIGRATION.md).
 
 ### Creating database dumps
 
@@ -131,19 +136,19 @@ The docker compose configuration also provides a service for using the [WordPres
 Sample command to install WordPress:
 
 ```
-docker-compose run --rm wpcli core install --url=http://localhost --title=test --admin_user=admin --admin_email=test@example.com
+docker compose run --rm wpcli core install --url=http://localhost --title=test --admin_user=admin --admin_email=test@example.com
 ```
 
 Or to list installed plugins:
 
 ```
-docker-compose run --rm wpcli plugin list
+docker compose run --rm wpcli plugin list
 ```
 
 For an easier usage you may consider adding an alias for the CLI:
 
 ```
-alias wp="docker-compose run --rm wpcli"
+alias wp="docker compose run --rm wpcli"
 ```
 
 This way you can use the CLI command above as follows:
@@ -157,3 +162,25 @@ wp plugin list
 You can also visit `http://127.0.0.1:8080` to access phpMyAdmin after starting the containers.
 
 The default username is `root`, and the password is the same as supplied in the `.env` file.
+
+## Migration
+
+If you have an existing WordPress site and want to migrate it to this Docker setup, please see our comprehensive [Migration Guide](MIGRATION.md). The guide covers:
+
+- Database migration and import
+- File and content migration
+- URL and domain changes
+- Configuration updates
+- Troubleshooting common issues
+
+### Quick Migration Helper
+
+For a guided migration process, you can use the included migration helper script:
+
+```bash
+./migrate.sh
+```
+
+This script will walk you through the migration process and help ensure you don't miss any important steps.
+
+For quick migration, see the [Project from existing source](#project-from-existing-source) section above, or follow the detailed [MIGRATION.md](MIGRATION.md) guide for step-by-step instructions.
