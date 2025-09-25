@@ -1,1 +1,28 @@
 .env
+
+# Local database dumps and exports
+wp-data/
+wp-app/
+*.sql
+*.sql.gz
+*.sql.bz2
+
+# WordPress runtime files containing credentials or generated content
+wp-app/wp-config.php
+wp-app/.htaccess
+wp-app/wp-content/uploads/
+wp-app/wp-content/cache/
+wp-app/wp-content/upgrade/
+wp-app/wp-content/backups/
+wp-app/wp-content/ai1wm-backups/
+wp-app/wp-content/debug.log
+wp-app/wp-content/*.log
+
+# Dependency and build artifacts
+node_modules/
+vendor/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
